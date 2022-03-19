@@ -11,7 +11,7 @@ import (
 	"testing/iotest"
 	"time"
 
-	"github.com/irenicaa/go-todo-backend/models"
+	"github.com/irenicaa/go-http-utils/models"
 	"github.com/stretchr/testify/assert"
 )
 

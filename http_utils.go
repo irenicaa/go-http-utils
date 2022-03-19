@@ -10,7 +10,7 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/irenicaa/go-todo-backend/models"
+	"github.com/irenicaa/go-http-utils/models"
 )
 
 // Logger ...
