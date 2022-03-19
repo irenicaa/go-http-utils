@@ -1,15 +1,17 @@
-package httputils
+package middlewares
 
 import (
 	"fmt"
 	"net/http"
 	"time"
+
+	httputils "github.com/irenicaa/go-http-utils"
 )
 
 // LoggingMiddleware ...
 func LoggingMiddleware(
 	handler http.Handler,
-	logger Logger,
+	logger httputils.Logger,
 	clock func() time.Time,
 ) http.Handler {
 	return http.HandlerFunc(func(
