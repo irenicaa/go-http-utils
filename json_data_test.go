@@ -69,15 +69,15 @@ func TestReadJSONData(t *testing.T) {
 }
 
 func TestLoadJSONData(t *testing.T) {
+	type testData struct {
+		FieldOne int
+		FieldTwo string
+	}
 	type args struct {
 		httpClient   HTTPClient
 		url          string
 		authHeader   string
 		responseData interface{}
-	}
-	type testData struct {
-		FieldOne int
-		FieldTwo string
 	}
 
 	tests := []struct {
@@ -95,9 +95,9 @@ func TestLoadJSONData(t *testing.T) {
 
 					response := &http.Response{
 						StatusCode: http.StatusOK,
-						Body: ioutil.NopCloser(bytes.NewReader([]byte(
-							`{"FieldOne": 23, "FieldTwo": "test"}`,
-						))),
+						Body: ioutil.NopCloser(bytes.NewReader(
+							[]byte(`{"FieldOne": 23, "FieldTwo": "test"}`),
+						)),
 					}
 
 					httpClient := &MockHTTPClient{}
@@ -122,9 +122,9 @@ func TestLoadJSONData(t *testing.T) {
 
 					response := &http.Response{
 						StatusCode: http.StatusOK,
-						Body: ioutil.NopCloser(bytes.NewReader([]byte(
-							`{"FieldOne": 23, "FieldTwo": "test"}`,
-						))),
+						Body: ioutil.NopCloser(bytes.NewReader(
+							[]byte(`{"FieldOne": 23, "FieldTwo": "test"}`),
+						)),
 					}
 
 					httpClient := &MockHTTPClient{}
@@ -181,9 +181,9 @@ func TestLoadJSONData(t *testing.T) {
 
 					response := &http.Response{
 						StatusCode: http.StatusOK,
-						Body: ioutil.NopCloser(iotest.TimeoutReader(bytes.NewReader([]byte(
-							`{"FieldOne": 23, "FieldTwo": "test"}`,
-						)))),
+						Body: ioutil.NopCloser(iotest.TimeoutReader(bytes.NewReader(
+							[]byte(`{"FieldOne": 23, "FieldTwo": "test"}`),
+						))),
 					}
 
 					httpClient := &MockHTTPClient{}
