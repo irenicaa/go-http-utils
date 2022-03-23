@@ -28,7 +28,7 @@ func GetIDFromURL(request *http.Request) (int, error) {
 
 	id, err := strconv.Atoi(idAsStr[1:])
 	if err != nil {
-		return 0, fmt.Errorf("unable to parse the ID: %s", err)
+		return 0, fmt.Errorf("unable to parse the ID: %w", err)
 	}
 
 	return id, nil
@@ -43,7 +43,7 @@ func GetDateFromURL(request *http.Request) (models.Date, error) {
 
 	date, err := models.ParseDate(dateAsStr[1:])
 	if err != nil {
-		return models.Date{}, fmt.Errorf("unable to parse the date: %s", err)
+		return models.Date{}, fmt.Errorf("unable to parse the date: %w", err)
 	}
 
 	return date, nil
@@ -63,7 +63,7 @@ func GetIntFormValue(
 
 	valueAsInt, err := strconv.Atoi(value)
 	if err != nil {
-		return 0, fmt.Errorf("value is incorrect: %v", err)
+		return 0, fmt.Errorf("value is incorrect: %w", err)
 	}
 	if valueAsInt < min {
 		return 0, errors.New("value too less")
@@ -84,7 +84,7 @@ func GetDateFormValue(request *http.Request, key string) (models.Date, error) {
 
 	parsedDate, err := models.ParseDate(value)
 	if err != nil {
-		return models.Date{}, fmt.Errorf("unable to parse the date: %v", err)
+		return models.Date{}, fmt.Errorf("unable to parse the date: %w", err)
 	}
 
 	return parsedDate, nil

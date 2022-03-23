@@ -17,11 +17,11 @@ type HTTPClient interface {
 func ReadJSONData(reader io.Reader, data interface{}) error {
 	dataAsJSON, err := ioutil.ReadAll(reader)
 	if err != nil {
-		return fmt.Errorf("unable to read the JSON data: %s", err)
+		return fmt.Errorf("unable to read the JSON data: %w", err)
 	}
 
 	if err := json.Unmarshal(dataAsJSON, data); err != nil {
-		return fmt.Errorf("unable to unmarshal the JSON data: %s", err)
+		return fmt.Errorf("unable to unmarshal the JSON data: %w", err)
 	}
 
 	return nil
@@ -36,7 +36,7 @@ func LoadJSONData(
 ) error {
 	request, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
-		return fmt.Errorf("unable to create the request: %v", err)
+		return fmt.Errorf("unable to create the request: %w", err)
 	}
 
 	if authHeader != "" {
@@ -45,13 +45,13 @@ func LoadJSONData(
 
 	response, err := httpClient.Do(request)
 	if err != nil {
-		return fmt.Errorf("unable to send the request: %v", err)
+		return fmt.Errorf("unable to send the request: %w", err)
 	}
 	defer response.Body.Close()
 
 	responseBytes, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		return fmt.Errorf("unable to read the request body: %v", err)
+		return fmt.Errorf("unable to read the request body: %w", err)
 	}
 
 	if response.StatusCode != http.StatusOK {
@@ -63,7 +63,7 @@ func LoadJSONData(
 	}
 
 	if err = json.Unmarshal(responseBytes, responseData); err != nil {
-		return fmt.Errorf("unable to unmarshal the request body: %v", err)
+		return fmt.Errorf("unable to unmarshal the request body: %w", err)
 	}
 
 	return nil

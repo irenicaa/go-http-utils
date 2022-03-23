@@ -19,11 +19,11 @@ func updateEnvs(envs []env) error {
 	for _, env := range envs {
 		if env.isNotSet {
 			if err := os.Unsetenv(env.name); err != nil {
-				return fmt.Errorf("unable to unset an environment variable: %v", err)
+				return fmt.Errorf("unable to unset an environment variable: %w", err)
 			}
 		} else {
 			if err := os.Setenv(env.name, env.value); err != nil {
-				return fmt.Errorf("unable to set an environment variable: %v", err)
+				return fmt.Errorf("unable to set an environment variable: %w", err)
 			}
 		}
 	}

@@ -30,12 +30,12 @@ func (date *Date) UnmarshalJSON(data []byte) error {
 
 	var formattedDate string
 	if err := json.Unmarshal(data, &formattedDate); err != nil {
-		return fmt.Errorf("unable to unmarshal the string: %v", err)
+		return fmt.Errorf("unable to unmarshal the string: %w", err)
 	}
 
 	parsedDate, err := ParseDate(formattedDate)
 	if err != nil {
-		return fmt.Errorf("unable to parse the date: %v", err)
+		return fmt.Errorf("unable to parse the date: %w", err)
 	}
 
 	*date = parsedDate
