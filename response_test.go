@@ -14,11 +14,11 @@ import (
 func TestHandleJSON(t *testing.T) {
 	type testData struct {
 		FieldOne int
-		FieldTwo int
+		FieldTwo string
 	}
 	type incorrectTestData struct {
 		FieldOne   int
-		FieldTwo   int
+		FieldTwo   string
 		FieldThree func()
 	}
 	type args struct {
@@ -35,7 +35,7 @@ func TestHandleJSON(t *testing.T) {
 			name: "success",
 			args: args{
 				logger: &MockLogger{},
-				data:   testData{FieldOne: 23, FieldTwo: 42},
+				data:   testData{FieldOne: 23, FieldTwo: "test"},
 			},
 			wantResponse: &http.Response{
 				Status: strconv.Itoa(http.StatusOK) + " " +
@@ -46,7 +46,7 @@ func TestHandleJSON(t *testing.T) {
 				ProtoMinor: 1,
 				Header:     http.Header{"Content-Type": {"application/json"}},
 				Body: ioutil.NopCloser(bytes.NewReader(
-					[]byte(`{"FieldOne":23,"FieldTwo":42}`),
+					[]byte(`{"FieldOne":23,"FieldTwo":"test"}`),
 				)),
 				ContentLength: -1,
 			},
@@ -67,7 +67,7 @@ func TestHandleJSON(t *testing.T) {
 				}(),
 				data: incorrectTestData{
 					FieldOne:   23,
-					FieldTwo:   42,
+					FieldTwo:   "test",
 					FieldThree: func() {},
 				},
 			},

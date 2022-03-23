@@ -10,6 +10,10 @@ import (
 )
 
 func TestGetJSONData(t *testing.T) {
+	type testData struct {
+		FieldOne int
+		FieldTwo string
+	}
 	type args struct {
 		reader io.Reader
 		data   interface{}
@@ -24,40 +28,30 @@ func TestGetJSONData(t *testing.T) {
 		{
 			name: "success",
 			args: args{
-				reader: bytes.NewReader([]byte(`{
-					"Title": "test",
-					"Completed": true,
-					"Order": 23
-				}`)),
-				data: &models.TodoRecord{},
+				reader: bytes.NewReader([]byte(`{"FieldOne": 23, "FieldTwo": "test"}`)),
+				data:   &testData{},
 			},
-			wantData: &models.TodoRecord{
-				Title:     "test",
-				Completed: true,
-				Order:     23,
-			},
-			wantErr: assert.NoError,
+			wantData: &testData{FieldOne: 23, FieldTwo: "test"},
+			wantErr:  assert.NoError,
 		},
 		{
 			name: "error on reading",
 			args: args{
-				reader: iotest.TimeoutReader(bytes.NewReader([]byte(`{
-					"Title": "test",
-					"Completed": true,
-					"Order": 23
-				}`))),
-				data: &models.TodoRecord{},
+				reader: iotest.TimeoutReader(bytes.NewReader(
+					[]byte(`{"FieldOne": 23, "FieldTwo": "test"}`),
+				)),
+				data: &testData{},
 			},
-			wantData: &models.TodoRecord{},
+			wantData: &testData{},
 			wantErr:  assert.Error,
 		},
 		{
 			name: "error on unmarshalling",
 			args: args{
 				reader: bytes.NewReader([]byte("incorrect")),
-				data:   &models.TodoRecord{},
+				data:   &testData{},
 			},
-			wantData: &models.TodoRecord{},
+			wantData: &testData{},
 			wantErr:  assert.Error,
 		},
 	}
